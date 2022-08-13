@@ -1,0 +1,62 @@
+import styled from "styled-components";
+
+import { Link } from 'react-router-dom'
+
+export default function Menu() {
+  return (
+    <>
+        <Nav>
+          <h1>Context API<span> Firebase</span></h1>
+          <ul>
+            <li>
+              <Link to={"/"}>Home</Link>
+            </li>
+            <li>
+              <Link to={'dashboard'}>DashBoard</Link>
+            </li>
+            <li>
+            <Link to={"login"}>Login</Link>
+            </li>
+            <li>
+            <Link to={"criar-conta"}>Criar Conta</Link>
+            </li>
+          </ul>
+        </Nav>
+    </>
+  );
+}
+
+
+const Nav = styled.nav`
+  display: flex;
+  background-color: #000;
+  padding: .5rem 0;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  h1{
+    color: #fff ;
+    text-transform: uppercase;
+    span{
+      font-size: 1.1rem;
+      text-transform: capitalize;
+    }
+  }
+  ul {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    a{
+      text-decoration: none;
+      color: #fff;
+      transition: all ease .3s;
+      
+      :hover{
+        border-radius: 15px;
+        background-color: #fff;
+        color: #000;
+        padding: .4rem .8rem;
+      }
+    }
+  }
+`;
