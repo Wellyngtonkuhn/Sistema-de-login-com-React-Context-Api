@@ -1,18 +1,63 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 import styled from "styled-components";
 
+import { initializeApp } from "firebase/app";
+
+import env from "react-dotenv";
+
+const firebaseConfig = {
+  apiKey: env.REACT_APP_API_KEY,
+  authDomain: env.REACT_APP_AUTHDOMAIN,
+  projectId: env.REACT_APP_PROJECTID,
+  storageBucket: env.REACT_APP_STORAGEBUCKET,
+  messagingSenderId: env.REACT_APP_MESSAGINSENDERID,
+  appId: env.REACT_APP_APPID,
+};
+
+const app = initializeApp(firebaseConfig)
+
+const auth = getAuth()
+
 export default function Login() {
+
+  const [email, setEmail] = useState('')
+  const [senha, setSenha] = useState('')
+
+  const navigate = useNavigate()
+
+  const handleLogin = (e) => {
+      e.preventDefault()
+
+      signInWithEmailAndPassword(auth, email, senha).then((data) => {
+        const login = data.user
+        localStorage.setItem('token:', login.accessToken )
+        navigate('/dashboard', {replace: true})
+
+      }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+      setEmail('')
+      setSenha('')
+  }
+
+
   return (
     <>
       <Section>
         <h1>Login</h1>
-        <Form>
+        <Form onSubmit={handleLogin}>
           <label>
             Email 
-            <input type="email" name="email" />
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
           </label>
           <label>
             Senha 
-            <input type="password" name="password" />
+            <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
           </label>
           <button type="submit">Entrar</button>
         </Form>

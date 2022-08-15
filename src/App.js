@@ -1,24 +1,21 @@
 import styled from "styled-components";
 
-import Menu from './components/menu/Menu'
+import Menu from "./components/menu/Menu";
 
 import Rotas from "./Rotas";
 
 
+
 export default function App() {
-
-
   return (
-   <>
-   <DefaultStyle>
-      <Menu />
-      <Rotas />
-   </DefaultStyle>
-   </>
+    <>
+      <DefaultStyle>
+        <Menu />
+        <Rotas />
+      </DefaultStyle>
+    </>
   );
 }
-
-
 
 const DefaultStyle = styled.div`
   padding: 0;
