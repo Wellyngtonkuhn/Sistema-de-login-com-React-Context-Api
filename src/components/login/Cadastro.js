@@ -1,69 +1,10 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-
-import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { useAuthUser } from "../../context-api/provider/AuthUser";
 
 import styled from "styled-components";
 
-import env from "react-dotenv";
-
-const firebaseConfig = {
-  apiKey: env.REACT_APP_API_KEY,
-  authDomain: env.REACT_APP_AUTHDOMAIN,
-  projectId: env.REACT_APP_PROJECTID,
-  storageBucket: env.REACT_APP_STORAGEBUCKET,
-  messagingSenderId: env.REACT_APP_MESSAGINSENDERID,
-  appId: env.REACT_APP_APPID,
-};
-
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth();
-
 export default function Cadastro() {
-
-  const [usuario, setUsuario] = useState({
-    nome: "",
-    email: "",
-    senha: "",
-  });
-
-  const navigate = useNavigate()
-
-  const handleCadastro = async (e) => {
-    e.preventDefault();
-    await createUserWithEmailAndPassword(auth, usuario.email, usuario.senha)
-      .then((data) => {
-        const user = data.user;
-        alert('Usuário Criado com Sucesso!')
-        localStorage.setItem('token:', user.accessToken)
-        navigate('/dashboard', { replace:true })
-        document.location.reload(true)
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        switch(errorCode){
-          case 'auth/invalid-email':
-            alert('Email invalido')
-          break
-          case 'auth/weak-password':
-            alert('Senha muito Fraca')
-          break
-          case 'auth/email-already-in-use':
-            alert('Email em Uso')
-          break
-          default:
-          break
-        }
-      });
-    setUsuario({
-      nome: "",
-      email: "",
-      senha: "",
-    });
-  };
+  
+  const { usuario, setUsuario, handleCadastro } = useAuthUser();
 
   return (
     <>

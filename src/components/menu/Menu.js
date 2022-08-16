@@ -1,21 +1,12 @@
-import { useTokenUser } from "../../context-api/provider/AuthUser.js";
-
-import { useNavigate } from "react-router-dom";
-
-import styled from "styled-components";
+import { useAuthUser } from "../../context-api/provider/AuthUser.js";
 
 import { Link } from "react-router-dom";
 
+import styled from "styled-components";
+
 export default function Menu() {
-  const { token } = useTokenUser();
 
-  const navigate = useNavigate();
-
-  const handleLogOut = () => {
-    localStorage.removeItem("token:");
-    navigate("/login");
-    document.location.reload(true);
-  };
+  const { token, handleLogOut } = useAuthUser();
 
   return (
     <>

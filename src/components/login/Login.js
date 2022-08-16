@@ -1,51 +1,10 @@
-import { useState } from "react";
-
-import { useNavigate } from "react-router-dom";
-
-import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-
 import styled from "styled-components";
 
-import env from "react-dotenv";
-
-const firebaseConfig = {
-  apiKey: env.REACT_APP_API_KEY,
-  authDomain: env.REACT_APP_AUTHDOMAIN,
-  projectId: env.REACT_APP_PROJECTID,
-  storageBucket: env.REACT_APP_STORAGEBUCKET,
-  messagingSenderId: env.REACT_APP_MESSAGINSENDERID,
-  appId: env.REACT_APP_APPID,
-};
-
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth();
+import { useAuthUser } from "../../context-api/provider/AuthUser";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-
-  const navigate = useNavigate();
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    signInWithEmailAndPassword(auth, email, senha)
-      .then((data) => {
-        const login = data.user;
-        localStorage.setItem("token:", login.accessToken);
-        navigate("/dashboard", { replace: true });
-        document.location.reload(true);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        if(errorCode === 'auth/user-not-found' | errorCode === 'auth/wrong-password'){
-          alert('Email ou Senha estão incoretos!')
-        }
-      });
-    setEmail("");
-    setSenha("");
-  };
+  
+  const { email, setEmail, senha, setSenha, handleLogin } = useAuthUser();
 
   return (
     <>
