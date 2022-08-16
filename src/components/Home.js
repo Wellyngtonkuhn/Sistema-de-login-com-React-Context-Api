@@ -6,7 +6,7 @@ export default function Home() {
       <Section>
         <Descricao>
           <p>
-            Sitema de Login Criado com Style Components, Autenticação de usuário
+            Sistema de Login Criado com Style Components, Autenticação de usuário
             e banco de dados com o FireBase e Contex API.
             O Token de Autenticação fica armazenado em Local Storage
           </p>
