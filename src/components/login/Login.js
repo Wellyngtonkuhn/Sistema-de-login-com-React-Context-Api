@@ -4,7 +4,7 @@ import { useAuthUser } from "../../context-api/provider/AuthUser";
 
 export default function Login() {
   
-  const { email, setEmail, senha, setSenha, handleLogin } = useAuthUser();
+  const { usuario, setUsuario, handleLogin } = useAuthUser();
 
   return (
     <>
@@ -15,16 +15,16 @@ export default function Login() {
             Email
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={usuario.email}
+              onChange={(e) => setUsuario({...usuario, email: e.target.value})}
             />
           </label>
           <label>
             Senha
             <input
               type="password"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
+              value={usuario.senha}
+              onChange={(e) => setUsuario({...usuario, senha: e.target.value})}
             />
           </label>
           <button type="submit">Entrar</button>

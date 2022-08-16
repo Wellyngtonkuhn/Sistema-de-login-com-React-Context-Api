@@ -2,31 +2,17 @@ import React, { useState, useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../fireStore/index";
 
-import env from "react-dotenv";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 export const AuthUserContext = React.createContext("");
 
-const firebaseConfig = {
-  apiKey: env.REACT_APP_API_KEY,
-  authDomain: env.REACT_APP_AUTHDOMAIN,
-  projectId: env.REACT_APP_PROJECTID,
-  storageBucket: env.REACT_APP_STORAGEBUCKET,
-  messagingSenderId: env.REACT_APP_MESSAGINSENDERID,
-  appId: env.REACT_APP_APPID,
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth();
-
-
 export default function AuthUser(props) {
-
   const [token, setToken] = useState("");
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
   const [usuario, setUsuario] = useState({
     nome: "",
     email: "",
@@ -35,30 +21,31 @@ export default function AuthUser(props) {
 
   const navigate = useNavigate();
 
+  // Cadastro de usuário
   const handleCadastro = async (e) => {
     e.preventDefault();
     await createUserWithEmailAndPassword(auth, usuario.email, usuario.senha)
       .then((data) => {
         const user = data.user;
-        alert('Usuário Criado com Sucesso!')
-        localStorage.setItem('token:', user.accessToken)
-        navigate('/dashboard', { replace:true })
-        document.location.reload(true)
+        alert("Usuário Criado com Sucesso!");
+        localStorage.setItem("token:", user.accessToken);
+        navigate("/dashboard", { replace: true });
+        document.location.reload(true);
       })
       .catch((error) => {
         const errorCode = error.code;
-        switch(errorCode){
-          case 'auth/invalid-email':
-            alert('Email invalido')
-          break
-          case 'auth/weak-password':
-            alert('Senha muito Fraca')
-          break
-          case 'auth/email-already-in-use':
-            alert('Email em Uso')
-          break
+        switch (errorCode) {
+          case "auth/invalid-email":
+            alert("Email invalido");
+            break;
+          case "auth/weak-password":
+            alert("Senha muito Fraca");
+            break;
+          case "auth/email-already-in-use":
+            alert("Email em Uso");
+            break;
           default:
-          break
+            break;
         }
       });
     setUsuario({
@@ -68,9 +55,10 @@ export default function AuthUser(props) {
     });
   };
 
+  // Login
   const handleLogin = (e) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, email, senha)
+    signInWithEmailAndPassword(auth, usuario.email, usuario.senha)
       .then((data) => {
         const login = data.user;
         localStorage.setItem("token:", login.accessToken);
@@ -79,21 +67,28 @@ export default function AuthUser(props) {
       })
       .catch((error) => {
         const errorCode = error.code;
-        if(errorCode === 'auth/user-not-found' | errorCode === 'auth/wrong-password'){
-          alert('Email ou Senha estão incoretos!')
+        if (
+          (errorCode === "auth/user-not-found") |
+          (errorCode === "auth/wrong-password")
+        ) {
+          alert("Email ou Senha estão incoretos!");
         }
       });
-    setEmail("");
-    setSenha("");
+    setUsuario({
+      nome: "",
+      email: "",
+      senha: "",
+    });
   };
 
+  // Logout
   const handleLogOut = () => {
     localStorage.removeItem("token:");
     navigate("/login");
     document.location.reload(true);
   };
 
-
+  // Verifica se usuário está logado
   useEffect(() => {
     const userToken = localStorage.getItem("token:");
     if (userToken) {
@@ -101,11 +96,20 @@ export default function AuthUser(props) {
     } else {
       setToken("");
     }
-  }, []);
+  }, [token]);
 
   return (
     <>
-      <AuthUserContext.Provider value={{ token, email, setEmail, senha, usuario, setUsuario, setSenha, handleCadastro, handleLogin, handleLogOut }}>
+      <AuthUserContext.Provider
+        value={{
+          token,
+          usuario,
+          setUsuario,
+          handleCadastro,
+          handleLogin,
+          handleLogOut,
+        }}
+      >
         {props.children}
       </AuthUserContext.Provider>
     </>
