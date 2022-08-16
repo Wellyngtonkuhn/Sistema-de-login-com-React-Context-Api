@@ -1,27 +1,23 @@
-import { useState, useEffect } from "react";
+import { useAuthUser } from "../../context-api/provider/AuthUser";
 
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
 import styled from "styled-components";
 
 import UserAutenticado from "./UserAutenticado";
 
 export default function DashBoard() {
-  const [token, setToken] = useState("");
 
-  useEffect(() => {
-    const login = localStorage.getItem("token:");
-    setToken(login);
-  }, [token]);
-
+  const { userData } = useAuthUser();
+  
   return (
     <>
-      {!token ? (
+      {!userData ? (
         <Section>
           <Div>
-            <h1>Faça Login para Continuar</h1>
-            <Link to={'/login'}>Login</Link>
-            <Link to={'/criar-conta'}>Criar Conta</Link>
+            <h1>Faça Login para Continuar </h1>
+            <Link to={"/login"}>Login</Link>
+            <Link to={"/criar-conta"}>Criar Conta</Link>
           </Div>
         </Section>
       ) : (
@@ -44,12 +40,12 @@ const Section = styled.section`
 `;
 
 const Div = styled.div`
-    text-align: center;
-    a{
-      text-decoration: none;
-      color: #000;
-      cursor: pointer;
-      padding: 0 1rem;
-      font-size: 1.1rem;
-    }
-`
+  text-align: center;
+  a {
+    text-decoration: none;
+    color: #000;
+    cursor: pointer;
+    padding: 0 1rem;
+    font-size: 1.1rem;
+  }
+`;

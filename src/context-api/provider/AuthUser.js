@@ -12,12 +12,13 @@ import {
 export const AuthUserContext = React.createContext("");
 
 export default function AuthUser(props) {
-  const [token, setToken] = useState("");
-  const [usuario, setUsuario] = useState({
+
+   const [usuario, setUsuario] = useState({
     nome: "",
     email: "",
     senha: "",
   });
+  const [userData, setUserData] = useState({})
 
   const navigate = useNavigate();
 
@@ -28,7 +29,7 @@ export default function AuthUser(props) {
       .then((data) => {
         const user = data.user;
         alert("Usuário Criado com Sucesso!");
-        localStorage.setItem("token:", user.accessToken);
+        localStorage.setItem("user:", JSON.stringify(user));
         navigate("/dashboard", { replace: true });
         document.location.reload(true);
       })
@@ -60,8 +61,8 @@ export default function AuthUser(props) {
     e.preventDefault();
     signInWithEmailAndPassword(auth, usuario.email, usuario.senha)
       .then((data) => {
-        const login = data.user;
-        localStorage.setItem("token:", login.accessToken);
+        const user = data.user;
+        localStorage.setItem("user:", JSON.stringify(user));
         navigate("/dashboard", { replace: true });
         document.location.reload(true);
       })
@@ -83,26 +84,23 @@ export default function AuthUser(props) {
 
   // Logout
   const handleLogOut = () => {
-    localStorage.removeItem("token:");
+    localStorage.removeItem("user:");
     navigate("/login");
     document.location.reload(true);
   };
 
   // Verifica se usuário está logado
   useEffect(() => {
-    const userToken = localStorage.getItem("token:");
-    if (userToken) {
-      setToken(userToken);
-    } else {
-      setToken("");
-    }
-  }, [token]);
+    const userStorage = localStorage.getItem("user:");
+    const data = JSON.parse(userStorage)
+    setUserData(data)
+  }, []);
 
   return (
     <>
       <AuthUserContext.Provider
         value={{
-          token,
+          userData,
           usuario,
           setUsuario,
           handleCadastro,

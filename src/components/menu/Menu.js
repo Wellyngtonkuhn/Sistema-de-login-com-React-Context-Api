@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 export default function Menu() {
 
-  const { token, handleLogOut } = useAuthUser();
+  const { userData, handleLogOut } = useAuthUser();
 
   return (
     <>
@@ -22,7 +22,7 @@ export default function Menu() {
             <Link to={"dashboard"}>DashBoard</Link>
           </li>
 
-          {token ? (
+          {userData ? (
             <li>
               <A onClick={handleLogOut}>Sair</A>
             </li>
