@@ -8,6 +8,7 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import styled from "styled-components";
 
 import env from "react-dotenv";
+import { ids } from "webpack";
 
 const firebaseConfig = {
   apiKey: env.REACT_APP_API_KEY,
@@ -40,11 +41,23 @@ export default function Cadastro() {
         alert('Usuário Criado com Sucesso!')
         localStorage.setItem('token:', user.accessToken)
         navigate('/dashboard', { replace:true })
+        document.location.reload(true)
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
-        alert('Erro ao criar usuário. Tente novamente!')
+        switch(errorCode){
+          case 'auth/invalid-email':
+            alert('Email invalido')
+          break
+          case 'auth/weak-password':
+            alert('Email invalido')
+          break
+          case 'auth/email-already-in-use':
+            alert('Email invalido')
+          break
+          default:
+          break
+        }
       });
     setUsuario({
       nome: "",

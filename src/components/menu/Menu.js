@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useTokenUser } from "../../context-api/provider/AuthUser.js";
 
 import { useNavigate } from "react-router-dom";
 
@@ -7,19 +7,14 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export default function Menu() {
-  const [token, setToken] = useState("");
+  const { token } = useTokenUser();
 
   const navigate = useNavigate();
-
-  // Arrumar o meu para trocar quando o usuário estiver logado
-  useEffect(() => {
-    const login = localStorage.getItem("token:");
-    setToken(login);
-  }, [token]);
 
   const handleLogOut = () => {
     localStorage.removeItem("token:");
     navigate("/login");
+    document.location.reload(true);
   };
 
   return (
@@ -79,12 +74,12 @@ const Nav = styled.nav`
       text-decoration: none;
       color: #fff;
       transition: all ease 0.3s;
-
+      padding: 0.1rem 0.2rem;
       :hover {
         border-radius: 15px;
         background-color: #fff;
         color: #000;
-        padding: 0.4rem 0.8rem;
+        padding: 0.3rem 0.4rem;
       }
     }
   }

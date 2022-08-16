@@ -18,33 +18,34 @@ const firebaseConfig = {
   appId: env.REACT_APP_APPID,
 };
 
-const app = initializeApp(firebaseConfig)
+const app = initializeApp(firebaseConfig);
 
-const auth = getAuth()
+const auth = getAuth();
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
 
-  const [email, setEmail] = useState('')
-  const [senha, setSenha] = useState('')
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
-      e.preventDefault()
-
-      signInWithEmailAndPassword(auth, email, senha).then((data) => {
-        const login = data.user
-        localStorage.setItem('token:', login.accessToken )
-        navigate('/dashboard', {replace: true})
-
-      }).catch((error) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, email, senha)
+      .then((data) => {
+        const login = data.user;
+        localStorage.setItem("token:", login.accessToken);
+        navigate("/dashboard", { replace: true });
+        document.location.reload(true);
+      })
+      .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
+        if(errorCode === 'auth/user-not-found' | errorCode === 'auth/wrong-password'){
+          alert('Email ou Senha estão incoretos!')
+        }
       });
-      setEmail('')
-      setSenha('')
-  }
-
+    setEmail("");
+    setSenha("");
+  };
 
   return (
     <>
@@ -52,12 +53,20 @@ export default function Login() {
         <h1>Login</h1>
         <Form onSubmit={handleLogin}>
           <label>
-            Email 
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            Email
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </label>
           <label>
-            Senha 
-            <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
+            Senha
+            <input
+              type="password"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+            />
           </label>
           <button type="submit">Entrar</button>
         </Form>
@@ -67,37 +76,37 @@ export default function Login() {
 }
 
 const Section = styled.section`
-    display:flex;
-    flex-direction: column;
-    text-align: center;
-    max-width: 100vw;
-    min-height: 80vh;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  max-width: 100vw;
+  min-height: 80vh;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Form = styled.form`
-    max-width: 15rem;
-    input{
-        margin: 1rem 0;
-        padding: .4rem .4rem;
-        margin-left: 10px;
-        border-radius: 8px;
-        border: 1px solid #333;
-    }
+  max-width: 15rem;
+  input {
+    margin: 1rem 0;
+    padding: 0.4rem 0.4rem;
+    margin-left: 10px;
+    border-radius: 8px;
+    border: 1px solid #333;
+  }
 
-    button{
-        padding: 0.7rem 2rem;
-        border-radius: 25px;
-        border: unset;
-        margin-bottom: 1rem;
-        cursor: pointer;
-        transition: all ease 0.3s;
-        background-color: gray;
-        color: #fff;
-        font-size: 1rem;
-        :hover{
-            background-color: #000;
-        }
+  button {
+    padding: 0.7rem 2rem;
+    border-radius: 25px;
+    border: unset;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: all ease 0.3s;
+    background-color: gray;
+    color: #fff;
+    font-size: 1rem;
+    :hover {
+      background-color: #000;
     }
+  }
 `;
