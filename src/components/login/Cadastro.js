@@ -8,7 +8,6 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import styled from "styled-components";
 
 import env from "react-dotenv";
-import { ids } from "webpack";
 
 const firebaseConfig = {
   apiKey: env.REACT_APP_API_KEY,
@@ -50,10 +49,10 @@ export default function Cadastro() {
             alert('Email invalido')
           break
           case 'auth/weak-password':
-            alert('Email invalido')
+            alert('Senha muito Fraca')
           break
           case 'auth/email-already-in-use':
-            alert('Email invalido')
+            alert('Email em Uso')
           break
           default:
           break

@@ -1,11 +1,11 @@
 import { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 
+import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 import styled from "styled-components";
-
-import { initializeApp } from "firebase/app";
 
 import env from "react-dotenv";
 
