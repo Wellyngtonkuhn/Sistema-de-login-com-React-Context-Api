@@ -48,11 +48,13 @@ const Descricao = styled.header`
   text-align: center;
   line-height: 1.5rem;
   font-size: 1.2rem;
+  margin-bottom: 1.2rem;
 `;
 
 const HomeSection = styled.section`
   display: flex;
   align-items: center;
+  gap: 3rem;
   header
     h1{
       font-size: 2rem;

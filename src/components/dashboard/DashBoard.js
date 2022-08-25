@@ -36,6 +36,7 @@ const Section = styled.section`
   align-items: center;
   h1 {
     font-size: 2rem;
+    margin-bottom: 1rem;
   }
 `;
 

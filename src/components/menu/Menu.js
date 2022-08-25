@@ -9,45 +9,52 @@ export default function Menu() {
 
   return (
     <>
-      <Nav>
-        <h1>
-          Context API<span> Firebase</span>
-        </h1>
-        <ul>
-          <li>
-            <Link to={"/"}>Home</Link>
-          </li>
-          <li>
-            <Link to={"dashboard"}>DashBoard</Link>
-          </li>
-
-          {userData ? (
+      <Div>
+        <Nav>
+          <h1>
+            Context API<span> Firebase</span>
+          </h1>
+          <ul>
             <li>
-              <A onClick={handleLogOut}>Sair</A>
+              <Link to={"/"}>Home</Link>
             </li>
-          ) : (
-            <>
+            <li>
+              <Link to={"dashboard"}>DashBoard</Link>
+            </li>
+
+            {userData ? (
               <li>
-                <Link to={"login"}>Login</Link>
+                <A onClick={handleLogOut}>Sair</A>
               </li>
-              <li>
-                <Link to={"criar-conta"}>Criar Conta</Link>
-              </li>
-            </>
-          )}
-        </ul>
-      </Nav>
+            ) : (
+              <>
+                <li>
+                  <Link to={"login"}>Login</Link>
+                </li>
+                <li>
+                  <Link to={"criar-conta"}>Criar Conta</Link>
+                </li>
+              </>
+            )}
+          </ul>
+        </Nav>
+      </Div>
     </>
   );
 }
 
+const Div = styled.div`
+  background-color: #000;
+  width: 100vw;
+`;
+
 const Nav = styled.nav`
   display: flex;
-  background-color: #000;
-  padding: 1.2rem 0.5rem;
-  max-width: 100vw;
   align-items: center;
   justify-content: space-between;
+  padding: 1.2rem 0;
+  max-width: 1295px;
+  margin: auto;
   h1 {
     color: #fff;
     text-transform: uppercase;

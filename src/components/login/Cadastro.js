@@ -6,6 +6,7 @@ export default function Cadastro() {
   
   const { usuario, setUsuario, handleCadastro } = useAuthUser();
 
+
   return (
     <>
       <Section>
