@@ -52,21 +52,23 @@ const Section = styled.section`
   display: flex;
   flex-direction: column;
   text-align: center;
-  max-width: 100vw;
-  min-height: 80vh;
   justify-content: center;
   align-items: center;
+  min-width: 75vw;
+  min-height: 75vh;
 `;
 
 const Form = styled.form`
   max-width: 15rem;
-
   input {
     margin: 1rem 0;
     padding: 0.4rem 0.4rem;
     margin-left: 10px;
     border-radius: 8px;
     border: 1px solid #333;
+    :focus{
+      outline: none;
+    }
   }
 
   button {

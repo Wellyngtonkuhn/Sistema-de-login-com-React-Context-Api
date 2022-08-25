@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Menu() {
-
   const { userData, handleLogOut } = useAuthUser();
 
   return (
@@ -45,10 +44,10 @@ export default function Menu() {
 const Nav = styled.nav`
   display: flex;
   background-color: #000;
-  padding: 0.5rem 0;
+  padding: 1.2rem 0.5rem;
+  max-width: 100vw;
   align-items: center;
   justify-content: space-between;
-  padding: 0 2rem;
   h1 {
     color: #fff;
     text-transform: uppercase;

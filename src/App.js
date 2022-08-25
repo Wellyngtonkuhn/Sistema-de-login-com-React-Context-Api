@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+
 import Menu from "./components/menu/Menu";
 
 import Rotas from "./Rotas";
@@ -20,3 +21,4 @@ const DefaultStyle = styled.div`
   margin: 0;
   box-sizing: border-box;
 `;
+

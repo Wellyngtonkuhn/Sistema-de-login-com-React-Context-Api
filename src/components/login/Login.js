@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
+import Cadastro from "./Cadastro";
+
 import { useAuthUser } from "../../context-api/provider/AuthUser";
 
 export default function Login() {
-  
   const { usuario, setUsuario, handleLogin } = useAuthUser();
 
   return (
@@ -16,7 +17,9 @@ export default function Login() {
             <input
               type="email"
               value={usuario.email}
-              onChange={(e) => setUsuario({...usuario, email: e.target.value})}
+              onChange={(e) =>
+                setUsuario({ ...usuario, email: e.target.value })
+              }
             />
           </label>
           <label>
@@ -24,7 +27,9 @@ export default function Login() {
             <input
               type="password"
               value={usuario.senha}
-              onChange={(e) => setUsuario({...usuario, senha: e.target.value})}
+              onChange={(e) =>
+                setUsuario({ ...usuario, senha: e.target.value })
+              }
             />
           </label>
           <button type="submit">Entrar</button>
@@ -38,10 +43,10 @@ const Section = styled.section`
   display: flex;
   flex-direction: column;
   text-align: center;
-  max-width: 100vw;
-  min-height: 80vh;
   justify-content: center;
   align-items: center;
+  min-width: 75vw;
+  min-height: 75vh;
 `;
 
 const Form = styled.form`
@@ -52,6 +57,9 @@ const Form = styled.form`
     margin-left: 10px;
     border-radius: 8px;
     border: 1px solid #333;
+    :focus {
+      outline: none;
+    }
   }
 
   button {
