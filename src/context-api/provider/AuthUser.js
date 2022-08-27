@@ -12,13 +12,14 @@ import {
 export const AuthUserContext = React.createContext("");
 
 export default function AuthUser(props) {
-
-   const [usuario, setUsuario] = useState({
+  const [usuario, setUsuario] = useState({
     nome: "",
     email: "",
     senha: "",
   });
-  const [userData, setUserData] = useState({})
+
+  const [userData, setUserData] = useState({});
+  const [showDashboarContentMenu, setShowDashboarContentMenu] = useState(0);
 
   const navigate = useNavigate();
 
@@ -92,9 +93,14 @@ export default function AuthUser(props) {
   // Verifica se usuário está logado
   useEffect(() => {
     const userStorage = localStorage.getItem("user:");
-    const data = JSON.parse(userStorage)
-    setUserData(data)
+    const data = JSON.parse(userStorage);
+    setUserData(data);
   }, []);
+
+  // Menu do dashboard
+  const handleDashboardMenu = (value) => {
+    setShowDashboarContentMenu(value);
+  };
 
   return (
     <>
@@ -106,6 +112,8 @@ export default function AuthUser(props) {
           handleCadastro,
           handleLogin,
           handleLogOut,
+          showDashboarContentMenu,
+          handleDashboardMenu,
         }}
       >
         {props.children}

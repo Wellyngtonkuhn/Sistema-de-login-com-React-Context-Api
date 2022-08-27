@@ -1,16 +1,22 @@
-import { useAuthUser } from '../../../context-api/provider/AuthUser'
+import { useEffect } from "react";
+import { useAuthUser } from "../../../context-api/provider/AuthUser";
 
+import Wellcome from "./Wellcome";
+import CadastrarUsuario from "./CadastroUsuario";
+import ListarUsuario from "./ListarUsuario";
 
 import styled from "styled-components";
 
 export default function UserAutenticado() {
-  const { userData } = useAuthUser();
+  
+  const { showDashboarContentMenu } = useAuthUser();
 
   return (
     <>
       <Section>
-        <h1>DashBoar</h1>
-        <h2> Email: {userData.email} </h2>
+        {showDashboarContentMenu === 0 && <Wellcome />}
+        {showDashboarContentMenu === 1 && <CadastrarUsuario />}
+        {showDashboarContentMenu === 2 && <ListarUsuario />}
       </Section>
     </>
   );

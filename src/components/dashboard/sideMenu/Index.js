@@ -1,22 +1,32 @@
 import styled from "styled-components";
-import { Link } from 'react-router-dom'
+
+import { useAuthUser } from "../../../context-api/provider/AuthUser";
 
 export default function Index() {
+
+  const { handleDashboardMenu } = useAuthUser();
+
   return (
     <>
       <SideMenu>
         <Ul>
           <li>
-            <Link to=''>Cadastrar Usuário</Link>
+            <a onClick={() => handleDashboardMenu(0)}>
+              Wellcome
+            </a>
           </li>
           <li>
-            <Link to=''>Listar Usuário</Link>
+            <a onClick={() => handleDashboardMenu(1)}>
+              Cadastrar Usuário
+            </a>
           </li>
           <li>
-            <Link to=''>Teste</Link>
+            <a onClick={() => handleDashboardMenu(2)}>
+              Listar Usuários
+            </a>
           </li>
           <li>
-            <Link to=''>Teste</Link>
+            <a>Teste</a>
           </li>
         </Ul>
       </SideMenu>
@@ -25,24 +35,23 @@ export default function Index() {
 }
 
 const SideMenu = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-basis: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-basis: 25%;
 `;
 
 const Ul = styled.ul`
   padding: 1rem;
-    li{
+  li {
     list-style: none;
-    padding-bottom: .5rem;
-    a{
+    padding-bottom: 0.5rem;
+    a {
       color: #000;
       text-decoration: none;
       cursor: pointer;
       font-size: 1.2rem;
     }
   }
-
-`
+`;

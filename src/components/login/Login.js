@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-import Cadastro from "./Cadastro";
-
 import { useAuthUser } from "../../context-api/provider/AuthUser";
 
 export default function Login() {
