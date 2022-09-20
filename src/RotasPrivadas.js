@@ -5,7 +5,10 @@ import { useAuthUser } from "./context-api/provider/AuthUser";
 import styled from "styled-components";
 
 export default function RotasPrivadas() {
-  const { userData } = useAuthUser();
+  const { userData, VerifyLogin } = useAuthUser();
+
+  VerifyLogin();
+
   const token = userData?.apiKey ?? "";
 
   return (

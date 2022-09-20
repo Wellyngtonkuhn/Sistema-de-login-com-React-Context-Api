@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, createContext, useContext, useLayoutEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 
@@ -9,7 +9,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
-export const AuthUserContext = React.createContext("");
+export const AuthUserContext = createContext("");
 
 export default function AuthUser(props) {
   const [usuario, setUsuario] = useState({
@@ -32,7 +32,6 @@ export default function AuthUser(props) {
         alert("Usuário Criado com Sucesso!");
         localStorage.setItem("user:", JSON.stringify(user));
         navigate("/dashboard", { replace: true });
-        document.location.reload(true);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -50,11 +49,6 @@ export default function AuthUser(props) {
             break;
         }
       });
-    setUsuario({
-      nome: "",
-      email: "",
-      senha: "",
-    });
   };
 
   // Login
@@ -65,7 +59,6 @@ export default function AuthUser(props) {
         const user = data.user;
         localStorage.setItem("user:", JSON.stringify(user));
         navigate("/dashboard", { replace: true });
-        document.location.reload(true);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -76,26 +69,22 @@ export default function AuthUser(props) {
           alert("Email ou Senha estão incoretos!");
         }
       });
-    setUsuario({
-      nome: "",
-      email: "",
-      senha: "",
-    });
   };
 
   // Logout
   const handleLogOut = () => {
     localStorage.removeItem("user:");
-    navigate("/login");
     document.location.reload(true);
   };
 
-  // Verifica se usuário está logado
-  useEffect(() => {
-    const userStorage = localStorage.getItem("user:");
-    const data = JSON.parse(userStorage);
-    setUserData(data);
-  }, []);
+  // Verifica se o usuário está logado
+  const VerifyLogin = () => {
+    useLayoutEffect(() => {
+      const userStorage = localStorage.getItem("user:");
+      const data = JSON.parse(userStorage);
+      setUserData(data);
+    }, []);
+  };
 
   // Menu do dashboard
   const handleDashboardMenu = (value) => {
@@ -107,6 +96,8 @@ export default function AuthUser(props) {
       <AuthUserContext.Provider
         value={{
           userData,
+          setUserData,
+          VerifyLogin,
           usuario,
           setUsuario,
           handleCadastro,
@@ -122,4 +113,4 @@ export default function AuthUser(props) {
   );
 }
 
-export const useAuthUser = () => React.useContext(AuthUserContext);
+export const useAuthUser = () => useContext(AuthUserContext);

@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Menu() {
-  const { userData, handleLogOut } = useAuthUser();
-
+  const { userData, handleLogOut, VerifyLogin } = useAuthUser();
+  VerifyLogin();
   return (
     <>
       <Div>
